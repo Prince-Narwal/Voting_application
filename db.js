@@ -1,33 +1,34 @@
-const mongoose=require('mongoose');
+
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-//Define the  mongodb connection url
-const mongourl=process.env.MONGODB_URL_LOCAL;//use in case want to run db server on localhost
-// const mongourl=process.env.MONGODB_URL;
+// Define the MongoDB connection URL
+const mongoURL = process.env.MONGODB_URL_LOCAL // Replace 'mydatabase' with your database name
+// const mongoURL = process.env.MONGODB_URL;
 
-//Set up mongodb connection
-mongoose.connect(mongourl, {
+// Set up MongoDB connection
+mongoose.connect(mongoURL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).catch(err => console.log('Mongoose connection error:', err));
+    useUnifiedTopology: true
+})
 
-//Get the default connection
-//Mongoose maintains a default object representing the mongodb connection
-const db=mongoose.connection;
+// Get the default connection
+// Mongoose maintains a default connection object representing the MongoDB connection.
+const db = mongoose.connection;
 
-//define event listners for database connection
-//connected,error,disconnected::---> all are event listner keywords
-db.on('connected',()=>{
-    console.log('connected to Mongodb server');//when connected to mongodb will print this message
+// Define event listeners for database connection
+
+db.on('connected', () => {
+    console.log('Connected to MongoDB server');
 });
 
-db.on('error',()=>{
-    console.log('Mongodb connection error')
+db.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
 });
 
-db.on('disconnected',()=>{
-    console.log("mongodb disconnected")
+db.on('disconnected', () => {
+    console.log('MongoDB disconnected');
 });
 
-//Export the database connection
-module.exports=db;
+// Export the database connection
+module.exports = db;
